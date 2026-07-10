@@ -11,4 +11,6 @@ public class PrenotazioneService {
     private PrenotazioneRepository prenotazioneRepository;
     private DipendenteService dipendenteService;
     private ViaggioService viaggioService;
+
+
 }
