@@ -7,6 +7,7 @@ import gianni_bussoletti.beu2s2exam.payloads.DipendenteResponseDTO;
 import gianni_bussoletti.beu2s2exam.services.DipendenteService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -32,5 +33,15 @@ public class DipendenteControllers {
 
         Dipendente save = this.dipendenteService.save(payload);
         return new DipendenteResponseDTO("Dipendente aggiunto al Database", save.getId(), LocalDateTime.now());
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Page<Dipendente> getAllDipendenti(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "nome") String orderBy
+    ) {
+        return this.dipendenteService.findAll(page, size, orderBy);
     }
 }
