@@ -12,7 +12,7 @@ import java.util.UUID;
 @Repository
 public interface PrenotazioneRepository extends JpaRepository<Prenotazione, UUID> {
 
-    @Query("SELECT COUNT(p) > 0 FROM Prenotazione p WHERE p.dipendente.id = :dipendenteID AND p.viaggio.dataRichiesta = :dataRichiesta")
+    @Query("SELECT COUNT(p) > 0 FROM Prenotazione p WHERE p.dipendente.id = :dipendenteID AND p.dataRichiesta = :dataRichiesta")
     boolean existsByDipendenteAndData(@Param("dipendenteID") UUID dipendenteID,
                                       @Param("dataRichiesta") LocalDate date);
 

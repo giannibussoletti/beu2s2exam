@@ -28,8 +28,9 @@ public class PrenotazioneService {
     public Prenotazione saveNewPrenotazione(PrenotazioniDTO payload) {
         Dipendente findDipendente = this.dipendenteService.findById(payload.dipendente());
         Viaggio findViaggio = this.viaggioService.findById(payload.viaggio());
-        boolean dipendenteAndData = this.prenotazioneRepository.existsByDipendenteAndData(findDipendente.getId(), findViaggio.getDataRichiesta());
-        if (dipendenteAndData) throw new DataOccupataException("Il dipendente ha già un viaggio in questo giorno");
+        boolean dipendenteAndData = this.prenotazioneRepository.existsByDipendenteAndData(findDipendente.getId(), payload.dataRichiesta());
+        if (dipendenteAndData)
+            throw new DataOccupataException("Il dipendente ha già prenotato in un viaggio in questa giornata");
 
         MezzoViaggio mezzoViaggio = null;
         switch (payload.mezzoViaggio().toLowerCase()) {
@@ -45,7 +46,7 @@ public class PrenotazioneService {
                     "nave\n" +
                     "macchina");
         }
-        Prenotazione newPrenotazione = new Prenotazione(findDipendente, findViaggio, payload.alloggio(), mezzoViaggio, payload.numeroBiglietto());
+        Prenotazione newPrenotazione = new Prenotazione(findDipendente, findViaggio, payload.alloggio(), mezzoViaggio, payload.numeroBiglietto(), payload.dataRichiesta());
         this.prenotazioneRepository.save(newPrenotazione);
         return newPrenotazione;
     }

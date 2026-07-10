@@ -29,7 +29,7 @@ public class ViaggioService {
         } else {
             throw new StatoViaggioException("Lo stato del viaggio può essere solo 'in programma' o 'completato'");
         }
-        Viaggio newViaggio = new Viaggio(payload.destinazione(), payload.dataRichiesta(), statoViaggio);
+        Viaggio newViaggio = new Viaggio(payload.destinazione(), payload.dataViaggio(), statoViaggio);
         this.viaggioRepository.save(newViaggio);
         return newViaggio;
 

@@ -1,10 +1,8 @@
 package gianni_bussoletti.beu2s2exam.payloads;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public record PrenotazioniDTO(
@@ -19,6 +17,10 @@ public record PrenotazioniDTO(
         String mezzoViaggio,
         @NotNull(message = "Il biglietto deve avere un numero identificato")
         @PositiveOrZero(message = "Il numero del biglietto non può essere un valore negativo")
-        int numeroBiglietto
+        int numeroBiglietto,
+        @NotNull(message = "La data di richiesta non può essere vuota")
+        @PastOrPresent(message = "La data deve essere di oggi o dei giorni passati")
+        LocalDate dataRichiesta
+
 ) {
 }
