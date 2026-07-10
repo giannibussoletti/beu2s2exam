@@ -46,4 +46,19 @@ public class ViaggioService {
         else throw new NotFoundException("Viaggio non trovato");
 
     }
+
+    public Viaggio findByIdAndUpdate(UUID viaggioId, String stato) {
+        Viaggio found = this.findById(viaggioId);
+
+        if (stato.equalsIgnoreCase("in programma")) {
+            found.setStatoViaggio(StatoViaggio.IN_PROGRAMMA);
+            this.viaggioRepository.save(found);
+        } else if (stato.equalsIgnoreCase("completato")) {
+            found.setStatoViaggio(StatoViaggio.COMPLETATO);
+            this.viaggioRepository.save(found);
+        } else {
+            throw new StatoViaggioException("Lo stato del viaggio può essere solo 'in programma' o 'completato'");
+        }
+        return found;
+    }
 }
