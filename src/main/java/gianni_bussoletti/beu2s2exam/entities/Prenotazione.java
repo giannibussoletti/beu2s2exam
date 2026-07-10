@@ -4,7 +4,6 @@ import gianni_bussoletti.beu2s2exam.enums.MezzoViaggio;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -38,15 +37,11 @@ public class Prenotazione {
     @Column(name = "numero_biglietto", nullable = false)
     private int numeroBiglietto;
 
-    @Column(name = "data_prenotazione", nullable = false)
-    private LocalDate dataPrenotazione;
-
     public Prenotazione(Dipendente dipendente, Viaggio viaggio, String alloggio, MezzoViaggio mezzoViaggio, int numeroBiglietto) {
         this.dipendente = dipendente;
         this.viaggio = viaggio;
         this.alloggio = alloggio;
         this.mezzoViaggio = mezzoViaggio;
         this.numeroBiglietto = numeroBiglietto;
-        this.dataPrenotazione = LocalDate.now();
     }
 }

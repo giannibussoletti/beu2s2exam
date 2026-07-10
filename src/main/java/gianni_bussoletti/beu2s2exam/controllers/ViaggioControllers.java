@@ -2,7 +2,7 @@ package gianni_bussoletti.beu2s2exam.controllers;
 
 import gianni_bussoletti.beu2s2exam.entities.Viaggio;
 import gianni_bussoletti.beu2s2exam.exceptions.ValidationException;
-import gianni_bussoletti.beu2s2exam.payloads.UpdateStatoViaggio;
+import gianni_bussoletti.beu2s2exam.payloads.UpdateStatoViaggioDTO;
 import gianni_bussoletti.beu2s2exam.payloads.ViaggioDTO;
 import gianni_bussoletti.beu2s2exam.payloads.ViaggioResponseDTO;
 import gianni_bussoletti.beu2s2exam.services.ViaggioService;
@@ -47,7 +47,7 @@ public class ViaggioControllers {
 
     @PatchMapping("/{statoViaggio}/stato")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateStatoViaggio(@PathVariable UUID statoViaggio, @RequestBody @Validated UpdateStatoViaggio payload) {
+    public void updateStatoViaggio(@PathVariable UUID statoViaggio, @RequestBody @Validated UpdateStatoViaggioDTO payload) {
         this.viaggioService.findByIdAndUpdate(statoViaggio, payload.statoViaggio());
     }
 

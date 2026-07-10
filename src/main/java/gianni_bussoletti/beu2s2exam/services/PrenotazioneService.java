@@ -4,6 +4,7 @@ import gianni_bussoletti.beu2s2exam.entities.Dipendente;
 import gianni_bussoletti.beu2s2exam.entities.Prenotazione;
 import gianni_bussoletti.beu2s2exam.entities.Viaggio;
 import gianni_bussoletti.beu2s2exam.enums.MezzoViaggio;
+import gianni_bussoletti.beu2s2exam.exceptions.DataOccupataException;
 import gianni_bussoletti.beu2s2exam.exceptions.MezzoViaggioException;
 import gianni_bussoletti.beu2s2exam.payloads.PrenotazioniDTO;
 import gianni_bussoletti.beu2s2exam.repositories.PrenotazioneRepository;
@@ -13,6 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -24,6 +28,9 @@ public class PrenotazioneService {
     public Prenotazione saveNewPrenotazione(PrenotazioniDTO payload) {
         Dipendente findDipendente = this.dipendenteService.findById(payload.dipendente());
         Viaggio findViaggio = this.viaggioService.findById(payload.viaggio());
+        boolean dipendenteAndData = this.prenotazioneRepository.existsByDipendenteAndData(findDipendente.getId(), findViaggio.getDataRichiesta());
+        if (dipendenteAndData) throw new DataOccupataException("Il dipendente ha già un viaggio in questo giorno");
+
         MezzoViaggio mezzoViaggio = null;
         switch (payload.mezzoViaggio().toLowerCase()) {
             case "treno" -> mezzoViaggio = MezzoViaggio.TRENO;
@@ -46,6 +53,10 @@ public class PrenotazioneService {
     public Page<Prenotazione> findAll(int page, int size, String orderBy) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
         return this.prenotazioneRepository.findAll(pageable);
+    }
+
+    public boolean findIfDateExists(UUID id, LocalDate date) {
+        return this.prenotazioneRepository.existsByDipendenteAndData(id, date);
     }
 
 }

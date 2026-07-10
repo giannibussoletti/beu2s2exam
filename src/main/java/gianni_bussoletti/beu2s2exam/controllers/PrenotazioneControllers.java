@@ -29,6 +29,7 @@ public class PrenotazioneControllers {
             List<String> validationErrors = validation.getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
             throw new ValidationException(validationErrors);
         }
+
         Prenotazione newPrenotazione = this.prenotazioneService.saveNewPrenotazione(payload);
         return new PrenotazioneResponseDTO(newPrenotazione.getId(), "Prenotazione Aggiunta correttamente", LocalDateTime.now());
     }
