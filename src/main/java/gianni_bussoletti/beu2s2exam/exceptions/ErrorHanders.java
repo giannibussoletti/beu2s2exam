@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 @RestControllerAdvice
 public class ErrorHanders {
@@ -17,6 +18,13 @@ public class ErrorHanders {
     public ErrorsWithListDTO handleValidationErrors(ValidationException ex) {
         return new ErrorsWithListDTO(ex.getMessage(), LocalDateTime.now(), ex.getErrorsList());
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorsDTO handleNotFound(NotFoundException ex) {
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
 
     @ExceptionHandler(EmailExistsInDBException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -45,6 +53,7 @@ public class ErrorHanders {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsDTO handlerGeneralException(Exception ex) {
+        System.out.println(Arrays.toString(ex.getStackTrace()));
         return new ErrorsDTO("C'è stato un errore nel server", LocalDateTime.now());
     }
 

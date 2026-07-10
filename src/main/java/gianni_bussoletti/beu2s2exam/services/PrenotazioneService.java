@@ -10,8 +10,6 @@ import gianni_bussoletti.beu2s2exam.repositories.PrenotazioneRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
-
 @Service
 @AllArgsConstructor
 public class PrenotazioneService {
@@ -19,9 +17,9 @@ public class PrenotazioneService {
     private DipendenteService dipendenteService;
     private ViaggioService viaggioService;
 
-    public Prenotazione saveNewPrenotazione(PrenotazioniDTO payload, UUID idDipendente, UUID idViaggio) {
-        Dipendente findDipendente = this.dipendenteService.findById(idDipendente);
-        Viaggio findViaggio = this.viaggioService.findById(idViaggio);
+    public Prenotazione saveNewPrenotazione(PrenotazioniDTO payload) {
+        Dipendente findDipendente = this.dipendenteService.findById(payload.dipendente());
+        Viaggio findViaggio = this.viaggioService.findById(payload.viaggio());
         MezzoViaggio mezzoViaggio = null;
         switch (payload.mezzoViaggio().toLowerCase()) {
             case "treno" -> mezzoViaggio = MezzoViaggio.TRENO;

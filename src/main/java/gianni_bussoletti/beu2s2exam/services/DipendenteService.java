@@ -40,7 +40,9 @@ public class DipendenteService {
     }
 
     public Dipendente findById(UUID id) {
-        return this.dipendeteRepository.findById(id).orElseThrow(() -> new NotFoundException("Dipendente non trovato"));
+        Dipendente found = this.dipendeteRepository.findDipendenteById(id);
+        if (found != null) return found;
+        else throw new NotFoundException("Dipendente non trovato");
 
     }
 

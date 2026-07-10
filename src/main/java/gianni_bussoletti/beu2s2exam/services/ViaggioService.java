@@ -41,7 +41,9 @@ public class ViaggioService {
     }
 
     public Viaggio findById(UUID id) {
-        return this.viaggioRepository.findById(id).orElseThrow(() -> new NotFoundException("Viaggio non trovato"));
+        Viaggio found = this.viaggioRepository.findViaggioById(id);
+        if (found != null) return found;
+        else throw new NotFoundException("Viaggio non trovato");
 
     }
 }

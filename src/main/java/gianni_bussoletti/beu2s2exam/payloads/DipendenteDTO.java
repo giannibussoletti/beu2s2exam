@@ -14,6 +14,7 @@ public record DipendenteDTO(
         @NotBlank(message = "Il campo cognome non può essere lasciato vuoto")
         @Size(min = 2, max = 30, message = "Il cognome deve essere fra i 2 e i 30 caratteri massimo")
         String cognome,
+        @NotBlank(message = "L'email non può essere vuota")
         @Email(message = "L'email non rispetta i requisiti minimi")
         String email) {
 }

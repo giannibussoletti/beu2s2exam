@@ -8,4 +8,6 @@ import java.util.UUID;
 
 @Repository
 public interface ViaggioRepository extends JpaRepository<Viaggio, UUID> {
+
+    Viaggio findViaggioById(UUID viaggioID);
 }

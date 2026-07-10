@@ -2,10 +2,7 @@ package gianni_bussoletti.beu2s2exam.entities;
 
 import gianni_bussoletti.beu2s2exam.enums.MezzoViaggio;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -14,6 +11,7 @@ import java.util.UUID;
 @Getter
 @ToString
 @Table(name = "prenotazioni")
+@NoArgsConstructor
 public class Prenotazione {
 
     @Id
