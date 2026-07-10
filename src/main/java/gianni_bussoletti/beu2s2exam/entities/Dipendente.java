@@ -1,10 +1,7 @@
 package gianni_bussoletti.beu2s2exam.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -18,6 +15,7 @@ public class Dipendente {
 
     @Id
     @GeneratedValue
+    @Setter(AccessLevel.NONE)
     private UUID id;
     @Column(nullable = false)
     private String username;
