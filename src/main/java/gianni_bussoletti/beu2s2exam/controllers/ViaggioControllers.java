@@ -1,0 +1,35 @@
+package gianni_bussoletti.beu2s2exam.controllers;
+
+import gianni_bussoletti.beu2s2exam.entities.Viaggio;
+import gianni_bussoletti.beu2s2exam.exceptions.ValidationException;
+import gianni_bussoletti.beu2s2exam.payloads.ViaggioDTO;
+import gianni_bussoletti.beu2s2exam.payloads.ViaggioResponseDTO;
+import gianni_bussoletti.beu2s2exam.services.ViaggioService;
+import lombok.AllArgsConstructor;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@RestController
+@RequestMapping("/viaggi")
+@AllArgsConstructor
+public class ViaggioControllers {
+
+    private ViaggioService viaggioService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ViaggioResponseDTO saveViaggio(@RequestBody @Validated ViaggioDTO payload, BindingResult validation) {
+        if (validation.hasErrors()) {
+            List<String> validationErrors = validation.getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).toList();
+            throw new ValidationException(validationErrors);
+        }
+        Viaggio newViaggio = this.viaggioService.saveNewViaggio(payload);
+        return new ViaggioResponseDTO("Viaggio salvato correttamemente", newViaggio.getId(), LocalDateTime.now());
+    }
+}

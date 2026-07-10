@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class ErrorHanders {
 
     @ExceptionHandler(ValidationException.class)
-    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorsWithListDTO handleValidationErrors(ValidationException ex) {
         return new ErrorsWithListDTO(ex.getMessage(), LocalDateTime.now(), ex.getErrorsList());
     }
@@ -28,5 +28,17 @@ public class ErrorHanders {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorsDTO handleUsernameExists(UsernameAlreadyExistsException ex) {
         return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
+    @ExceptionHandler(StatoViaggioException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorsDTO handleStatoViaggio(StatoViaggioException ex) {
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorsDTO handlerGeneralException(Exception ex) {
+        return new ErrorsDTO("C'è stato un errore nel server", LocalDateTime.now());
     }
 }
