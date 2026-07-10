@@ -7,6 +7,7 @@ import gianni_bussoletti.beu2s2exam.payloads.ViaggioResponseDTO;
 import gianni_bussoletti.beu2s2exam.services.ViaggioService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -31,5 +32,14 @@ public class ViaggioControllers {
         }
         Viaggio newViaggio = this.viaggioService.saveNewViaggio(payload);
         return new ViaggioResponseDTO("Viaggio salvato correttamemente", newViaggio.getId(), LocalDateTime.now());
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public Page<Viaggio> findAllViaggi(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "destinazione") String orderBy) {
+        return this.viaggioService.findAllViaggi(page, size, orderBy);
     }
 }
