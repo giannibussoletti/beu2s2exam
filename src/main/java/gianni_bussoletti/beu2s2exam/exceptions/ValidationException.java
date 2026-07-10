@@ -1,7 +1,10 @@
 package gianni_bussoletti.beu2s2exam.exceptions;
 
+import lombok.Getter;
+
 import java.util.List;
 
+@Getter
 public class ValidationException extends RuntimeException {
 
     private List<String> errorsList;
