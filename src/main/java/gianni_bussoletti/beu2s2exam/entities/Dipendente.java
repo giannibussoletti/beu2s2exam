@@ -23,7 +23,7 @@ public class Dipendente {
     private String nome;
     @Column(nullable = false)
     private String cognome;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     public Dipendente(String username, String nome, String cognome, String email) {
