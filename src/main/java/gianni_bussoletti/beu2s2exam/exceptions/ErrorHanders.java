@@ -24,6 +24,9 @@ public class ErrorHanders {
         return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
     }
 
-//    @ExceptionHandler(EmailExistsInDBException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorsDTO handleUsernameExists(UsernameAlreadyExistsException ex) {
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
 }
