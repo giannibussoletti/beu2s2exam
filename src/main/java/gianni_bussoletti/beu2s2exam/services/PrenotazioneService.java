@@ -8,6 +8,10 @@ import gianni_bussoletti.beu2s2exam.exceptions.MezzoViaggioException;
 import gianni_bussoletti.beu2s2exam.payloads.PrenotazioniDTO;
 import gianni_bussoletti.beu2s2exam.repositories.PrenotazioneRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -37,6 +41,11 @@ public class PrenotazioneService {
         Prenotazione newPrenotazione = new Prenotazione(findDipendente, findViaggio, payload.alloggio(), mezzoViaggio, payload.numeroBiglietto());
         this.prenotazioneRepository.save(newPrenotazione);
         return newPrenotazione;
+    }
+
+    public Page<Prenotazione> findAll(int page, int size, String orderBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(orderBy));
+        return this.prenotazioneRepository.findAll(pageable);
     }
 
 }
