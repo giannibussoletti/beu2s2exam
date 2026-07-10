@@ -36,9 +36,17 @@ public class ErrorHanders {
         return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
     }
 
+    @ExceptionHandler(MezzoViaggioException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorsDTO handlerMezzoViaggio(Exception ex) {
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorsDTO handlerGeneralException(Exception ex) {
         return new ErrorsDTO("C'è stato un errore nel server", LocalDateTime.now());
     }
+
+
 }

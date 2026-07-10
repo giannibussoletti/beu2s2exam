@@ -2,7 +2,10 @@ package gianni_bussoletti.beu2s2exam.entities;
 
 import gianni_bussoletti.beu2s2exam.enums.MezzoViaggio;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.UUID;
 
@@ -10,7 +13,6 @@ import java.util.UUID;
 @Setter
 @Getter
 @ToString
-@NoArgsConstructor
 @Table(name = "prenotazioni")
 public class Prenotazione {
 
@@ -25,7 +27,7 @@ public class Prenotazione {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Prenotazione prenotazione;
+    private Viaggio viaggio;
 
     @Column(nullable = false)
     private String alloggio;
@@ -37,9 +39,9 @@ public class Prenotazione {
     @Column(name = "numero_biglietto", nullable = false)
     private int numeroBiglietto;
 
-    public Prenotazione(Dipendente dipendente, Prenotazione prenotazione, String alloggio, MezzoViaggio mezzoViaggio, int numeroBiglietto) {
+    public Prenotazione(Dipendente dipendente, Viaggio viaggio, String alloggio, MezzoViaggio mezzoViaggio, int numeroBiglietto) {
         this.dipendente = dipendente;
-        this.prenotazione = prenotazione;
+        this.viaggio = viaggio;
         this.alloggio = alloggio;
         this.mezzoViaggio = mezzoViaggio;
         this.numeroBiglietto = numeroBiglietto;
