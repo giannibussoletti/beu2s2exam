@@ -1,5 +1,6 @@
 package gianni_bussoletti.beu2s2exam.exceptions;
 
+import gianni_bussoletti.beu2s2exam.payloads.ErrorsDTO;
 import gianni_bussoletti.beu2s2exam.payloads.ErrorsWithListDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,4 +17,13 @@ public class ErrorHanders {
     public ErrorsWithListDTO handleValidationErrors(ValidationException ex) {
         return new ErrorsWithListDTO(ex.getMessage(), LocalDateTime.now(), ex.getErrorsList());
     }
+
+    @ExceptionHandler(EmailExistsInDBException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorsDTO handleEmailExists(EmailExistsInDBException ex) {
+        return new ErrorsDTO(ex.getMessage(), LocalDateTime.now());
+    }
+
+//    @ExceptionHandler(EmailExistsInDBException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
 }
